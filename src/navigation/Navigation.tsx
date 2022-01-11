@@ -2,8 +2,15 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen } from '../screens/HomeScreen';
 import { DetailScreen } from '../screens/DetailScreen';
+import { IMovie } from '../interfaces/MovieInterface';
 
-const Stack = createStackNavigator();
+
+export type TRootStackParams = {
+  HomeScreen: undefined,
+  DetailScreen: IMovie
+}
+
+const Stack = createStackNavigator<TRootStackParams>();
 
 export const Navigation = () => {
   return (
@@ -11,12 +18,12 @@ export const Navigation = () => {
         screenOptions={{ 
             headerShown: false,
             cardStyle: {
-                backgroundColor: 'white',
+                //backgroundColor: 'white',
             }
          }}
       >
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Detail" component={DetailScreen} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="DetailScreen" component={DetailScreen} />
     </Stack.Navigator>
   );
 }

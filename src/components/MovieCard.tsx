@@ -1,5 +1,6 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { IMovie } from '../interfaces/MovieInterface';
 
 
@@ -13,9 +14,20 @@ export const MovieCard = ({ movie, height = 420, width = 300 }: IMovieCard) => {
     const { title, poster_path } = movie;
     const uriImg = `https://image.tmdb.org/t/p/w500/${poster_path}`;
 
+    const navigation = useNavigation();
+
     return (
-        <View style={{ height, width, marginHorizontal: 8, }}>
-            <View style={styles.imageContainer}>
+        <View style={{ 
+            height, 
+            width, 
+            marginHorizontal: 2, 
+            paddingBottom: 20,
+            paddingHorizontal: 7,
+        }}>
+            <TouchableOpacity style={styles.imageContainer}
+                onPress={() => navigation.navigate('DetailScreen', movie)}
+                activeOpacity={0.8}
+            >
 
                 <Image
                 source={{ 
@@ -23,7 +35,7 @@ export const MovieCard = ({ movie, height = 420, width = 300 }: IMovieCard) => {
                 }} 
                 style={styles.image}
                 />
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }
