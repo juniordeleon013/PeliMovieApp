@@ -3,19 +3,21 @@ import React from 'react';
 import { IMovie } from '../interfaces/MovieInterface';
 import { StackScreenProps } from "@react-navigation/stack";
 import { TRootStackParams } from "../navigation/Navigation";
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useMovieDetail } from '../hooks/useMovieDetail';
 import { isLoadingComponent } from '../components/isLoadingComponent';
 import { MovieDetails } from '../components/MovieDetails';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const screenHeight = Dimensions.get('screen').height
 
 interface INavigateParams extends StackScreenProps<TRootStackParams, 'DetailScreen'> {};
 
-export const DetailScreen = ({ route }: INavigateParams) => {
+export const DetailScreen = ({ route, navigation }: INavigateParams) => {
     const movie = route.params;
     const uriImg = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+    const { top } = useSafeAreaInsets();
 
     const { isLoading, cast, movieFullDetail} = useMovieDetail(movie.id);
 
@@ -40,6 +42,19 @@ export const DetailScreen = ({ route }: INavigateParams) => {
                 ? <ActivityIndicator size={35} style={{marginTop: 20,}}/>
                 : <MovieDetails movieFull={movieFullDetail!} cast={ cast }/>
             }
+            <View style={{...styles.backButton, top }}>
+                <TouchableOpacity
+                    onPress={() => navigation.pop()}
+                >
+                    <Icon 
+                        color='white' 
+                        name="close-circle-outline" 
+                        size={50} 
+                    />
+
+                </TouchableOpacity>
+
+            </View>
         </ScrollView>
     )
 }
@@ -82,4 +97,8 @@ const styles = StyleSheet.create({
     posterImage:{
         flex: 1,
     },
+    backButton:{
+        position: 'absolute',
+        right: 5
+    }
 })

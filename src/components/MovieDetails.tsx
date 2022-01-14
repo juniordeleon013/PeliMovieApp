@@ -54,7 +54,7 @@ export const MovieDetails = ({ movieFull, cast } : IProps) => {
                     <FlatList
                         data={cast}
                         keyExtractor={item => item.id.toString()}
-                        renderItem={({ index }) => <CastItem actor={cast[index]}/>}
+                        renderItem={({ item }) => <CastItem actor={item}/>}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         style={{ marginTop: 10, height: 50 }}
